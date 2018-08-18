@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Hexavara Demo</string>
+    <string name="login">Login</string>
+    <string name="hint_login_password">Password</string>
+    <string name="hint_login_username">Email or Username</string>
+    <string name="warning_please_fill_the_required_form">Please fill the required form</string>
+    <string name="error_username_cannot_empty">Username cannot empty</string>
+    <string name="error_password_length_to_short">Password length to short</string>
 </resources>

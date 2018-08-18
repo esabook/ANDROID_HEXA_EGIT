@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dip" />
+            <stroke android:width="1dip" android:color="@color/lovelist_grey" />
+            <gradient android:angle="-90" android:endColor="@color/lovelist_grey" android:startColor="@color/lovelist_grey" />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/rounded_large" />
+            <stroke android:width="1dip" android:color="@color/lovelist_blue_light" />
+            <solid android:color="@color/lovelist_blue_light" />
+        </shape>
+    </item>
+    <item>
+        <layer-list>
+
+            <item>
+                <shape android:shape="rectangle">
+                    <size android:height="45dp" />
+                    <corners android:radius="@dimen/rounded_large" />
+                    <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp" />
+                    <gradient android:angle="-90" android:endColor="@color/lovelist_blue_dark" android:startColor="@color/lovelist_blue_dark" />
+                </shape>
+            </item>
+            <item>
+
+                <shape android:shape="rectangle">
+                    <corners android:radius="19dp" />
+                    <stroke android:width="2dp" android:color="@android:color/white" />
+                    <gradient android:angle="-90" android:endColor="@color/lovelist_blue_dark" android:startColor="@color/lovelist_blue_dark" />
+                </shape>
+            </item>
+
+
+        </layer-list>
+
+    </item>
+</selector>
