@@ -28,7 +28,11 @@ public class LoginPresenter {
     public void OnSubmit(LoginModel loginModel) {
         if (!(loginModel.isPasswordValid() &&
                 loginModel.isUsernameValid())) {
-            showErrorToast(App.getAppContext().getString(R.string.warning_please_fill_the_required_form));
+            try {
+                showErrorToast(App.getAppContext().getString(R.string.warning_please_fill_the_required_form));
+            } catch (Exception e) {
+            }
+
             return;
         }
 
@@ -80,12 +84,16 @@ public class LoginPresenter {
      * @param msg
      */
     private void showErrorToast(String msg) {
-        Toasty.error(
-                App.getActivity(),
-                msg,
-                Toast.LENGTH_SHORT,
-                true)
-                .show();
+        try {
+            Toasty.error(
+                    App.getAppContext(),
+                    msg,
+                    Toast.LENGTH_SHORT,
+                    true)
+                    .show();
+        } catch (Exception e) {
+        }
+
     }
 
     public void setLoggedIn() {

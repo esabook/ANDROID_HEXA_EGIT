@@ -18,6 +18,8 @@ public class LoveListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         ActivityLoveListBinding activityLoveListBinding = DataBindingUtil.setContentView(this, R.layout.activity_love_list);
 
 
@@ -26,15 +28,23 @@ public class LoveListActivity extends AppCompatActivity {
         activityLoveListBinding.list.addItemDecoration(getSeparator());
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+
     /**
+     * love-list separator
      * @return
      */
     private RecyclerView.ItemDecoration getSeparator() {
 
         Paint mPaint = new Paint();
-        mPaint.setColor(getResources().getColor(R.color.lovelist_blue_dark));
+        mPaint.setColor(getResources().getColor(R.color.lovelist_grey));
         final float thickness = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                1, getResources().getDisplayMetrics());
+                5, getResources().getDisplayMetrics());
         mPaint.setStrokeWidth(thickness);
 
         return new RecyclerView.ItemDecoration() {
