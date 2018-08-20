@@ -1,11 +1,13 @@
 package com.hexavara.hexavarademo.component.login;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.hexavara.hexavarademo.R;
 import com.hexavara.hexavarademo.api.ApiFactory;
 import com.hexavara.hexavarademo.api.IAuthServices;
+import com.hexavara.hexavarademo.component.lovelist.LoveListActivity;
 import com.hexavara.hexavarademo.model.UserModel;
 import com.hexavara.hexavarademo.utils.App;
 
@@ -45,7 +47,7 @@ public class LoginPresenter {
 
             if (response.isSuccessful()) {
                 saveCurrentUserSession(response.body());
-
+                setLoggedIn();
             } else {
                 try {
                     showErrorToast(response.errorBody().string());
@@ -85,4 +87,19 @@ public class LoginPresenter {
                 true)
                 .show();
     }
+
+    public void setLoggedIn() {
+        if (isLogedIn()) {
+            Intent i = new Intent(App.getAppContext(), LoveListActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            App.getAppContext().startActivity(i);
+        }
+    }
+
+
+    public boolean isLogedIn() {
+        return Realm.getDefaultInstance().where(UserModel.class).findFirst() != null;
+    }
+
+
 }

@@ -3,4 +3,5 @@
     <dimen name="rounded_tiny">0dp</dimen>
     <dimen name="rounded_small">4dp</dimen>
     <dimen name="rounded_large">20dp</dimen>
+    <dimen name="global_padding_medium">10dp</dimen>
 </resources>

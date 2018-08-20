@@ -1,13 +1,14 @@
 package com.hexavara.hexavarademo.api;
 
 
+import android.util.Log;
+
 import com.hexavara.hexavarademo.model.UserModel;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -19,9 +20,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiFactory {
     private static final String TAG = "API_FACTORY";
     private static final String url = "http://hexavara.ip-dynamic.com/androidrec/public/api/";
-    private String myAPIKey = "";
-    private int connectTimeOutMS = 2000;
-    private int readTimeOutMS = 2000;
+    private int connectTimeOutMS = 1000;
+    private int readTimeOutMS = 1000;
 
     /**
      * create retrofit object based
@@ -41,9 +41,7 @@ public class ApiFactory {
      */
     public Retrofit getRetrofit() {
         UserModel userModel = Realm.getDefaultInstance().where(UserModel.class).findFirst();
-        this.myAPIKey = userModel != null ? userModel.token : "";
-
-        return getRetrofit(url);
+        return getRetrofit(userModel != null ? userModel.token : "", url);
     }
 
     /**
@@ -52,8 +50,11 @@ public class ApiFactory {
      * @return Retrofit
      */
     public Retrofit getRetrofit(String token, String url) {
-        this.myAPIKey = token;
-        return getRetrofit(url);
+        return new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(getHttpConfiguration(token))
+                .build();
     }
 
     /**
@@ -61,35 +62,28 @@ public class ApiFactory {
      * @return Retrofit
      */
     public Retrofit getRetrofit(String url) {
-        return new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(getHttpConfiguration())
-                .build();
+        return getRetrofit(url);
     }
 
 
     /**
      * @return OkHttpClient
      */
-    public OkHttpClient getHttpConfiguration() {
+    public OkHttpClient getHttpConfiguration(String token) {
 
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
+        Log.i(TAG, token);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Request newRequest = chain.request();
-                        HttpUrl originalHttpUrl = newRequest.url();
-
-                        HttpUrl _url = originalHttpUrl.newBuilder()
-                                .addQueryParameter("Authorization", myAPIKey)
+                        Request newRequest = chain.request()
+                                .newBuilder()
+                                .addHeader("Authorization", token)
                                 .build();
-
-                        newRequest.newBuilder().url(_url).build();
                         return chain.proceed(newRequest);
                     }
                 })

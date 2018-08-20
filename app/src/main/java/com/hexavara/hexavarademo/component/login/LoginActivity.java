@@ -28,7 +28,9 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         loginBinding.setLoginInfo(loginModel);
-        loginBinding.setLoginPresenter(new LoginPresenter());
+        LoginPresenter loginPresenter = new LoginPresenter();
+        loginPresenter.setLoggedIn();
+        loginBinding.setLoginPresenter(loginPresenter);
     }
 
     @Override
@@ -36,4 +38,5 @@ public class LoginActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putParcelable(TAG, Parcels.wrap(loginModel));
     }
+
 }
