@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import
+            alias="Str"
+            type="java.lang.String" />
+
+        <variable
+            name="loveItemViewModel"
+            type="com.hexavara.hexavarademo.component.lovelist.LoveItemViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/global_padding_medium">
+
+        <ImageView
+            android:id="@+id/love_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            app:imageURL="@{`http://`+loveItemViewModel.model.image}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/love_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+
+            android:text="@{loveItemViewModel.model.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/love_image"
+            app:layout_constraintTop_toTopOf="@+id/love_image" />
+
+        <TextView
+            android:id="@+id/salary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{Str.valueOf(loveItemViewModel.model.salary)}"
+            app:layout_constraintEnd_toEndOf="@+id/love_name"
+            app:layout_constraintStart_toStartOf="@+id/love_name"
+            app:layout_constraintTop_toBottomOf="@+id/love_name" />
+    </android.support.constraint.ConstraintLayout>
+</layout>
